@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct queue {
+    int data;
+    struct queue *next;
+};
+
+struct queue* front = NULL;
+struct queue* rear = NULL;
+int n;
+
+void enqueue(int data) {
+    struct queue *newnode = (struct queue*)malloc(sizeof(struct queue));
+    newnode->data = data;
+    newnode->next = NULL;
+    if (front == NULL && rear == NULL) {
+        front = rear = newnode;
+    } else {
+        rear->next = newnode;
+        rear = newnode;
+    }
+}
+
+int dequeue() {
+    int var = -1;
+    if (front == NULL && rear == NULL) {
+        printf("queue is empty");
+    } else {
+        struct queue *temp = front;
+        front = front->next;
+        var = temp->data;
+        free(temp);
+    }
+    return var;
+}
+
+void bfs(int start, int arr[n][n]) {
+    int visited[n];
+    for (int i = 0; i < n; i++) {
+        visited[i] = 0;
+    }
+    enqueue(start);
+    visited[start] = 1;
+    while (front != NULL) {
+        for (int i = 0; i < n; i++) {
+            if (arr[front->data][i] != 0 && visited[i] == 0) {
+                enqueue(i);
+                visited[i] = 1;
+            }
+        }
+        int ver = dequeue();
+        printf("%d ", ver);
+    }
+}
+
+void dfs(int node, int arr[n][n], int visited[n]) {
+    printf("%d ", node);
+    visited[node] = 1;
+    for (int i = 0; i < n; i++) {
+        if (arr[node][i] != 0 && visited[i] == 0) {
+            dfs(i, arr, visited);
+        }
+    }
+}
+
+void graph(int arr[n][n]) {
+    int i, j, val, value;
+    for (i = 0; i < n; i++) {
+        for (j = i; j < n; j++) {
+            printf("enter whether edge is present between vertices %d -- %d 1- yes 0 - no", i, j);
+            scanf("%d", &val);
+            if (val == 1) {
+                printf("enter edge value");
+                scanf("%d", &value);
+                arr[i][j] = value;
+                arr[j][i] = value;
+            } else {
+                arr[i][j] = 0;
+                arr[j][i] = 0;
+            }
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int start;
+    int node;
+    int ans;
+    printf("enter no of vertices in the graph");
+    scanf("%d", &n);
+    int arr[n][n];
+    graph(arr);
+    do{
+    printf("enter node");
+    scanf("%d", &start);
+    bfs(start, arr);
+
+    int visited[n];
+    for (int i = 0; i < n; i++) {
+        visited[i] = 0;
+    }
+    printf("\nenter node for dfs");
+    scanf("%d", &node);
+    dfs(node, arr, visited);
+    printf("do u want to continue 1- yes | 0 - no");
+    scanf("%d",&ans);
+    }while (ans==1);
+
+    return 0;
+}
+
+/*output:
+enter no of vertices in the graph3
+enter whether edge is present between vertices 0 -- 0 1- yes 0 - no0
+enter whether edge is present between vertices 0 -- 1 1- yes 0 - no1
+enter edge value12
+enter whether edge is present between vertices 0 -- 2 1- yes 0 - no1
+enter edge value16
+enter whether edge is present between vertices 1 -- 1 1- yes 0 - no0
+enter whether edge is present between vertices 1 -- 2 1- yes 0 - no1
+enter edge value14
+enter whether edge is present between vertices 2 -- 2 1- yes 0 - no0
+0 12 16 
+12 0 14 
+16 14 0 
+enter node0
+0 1 2 
+enter node for dfs1
+1 0 2 do u want to continue 1- yes | 0 - no0*/

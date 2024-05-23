@@ -1,0 +1,194 @@
+//Devashish Rahate  (SYITB105)
+//CODE
+#include <iostream>
+using namespace std;
+class Heap{
+    int arr[100];
+    int n,i;
+    int count;
+    public:
+       void heap()
+       {
+           cout<<"Enter size of the array : ";
+           cin>>n;
+           cout<<"Enter elements in the array :";
+           for(int i=1;i<=n;i++){
+               cin>>arr[i];
+           }
+           count=n;
+       }
+       void arrange_heap()
+      {  
+        //   i=n;
+         for(int j=1;j<=n;j++){
+                i=j;
+                while(i>0)
+           {
+             
+               if(arr[2*i]>=arr[i])
+               {
+                
+                int temp=arr[i];
+                arr[i]=arr[2*i];
+                arr[2*i]=temp;
+               }
+             if(arr[2*i+1]>=arr[i])
+               {
+                
+                int temp=arr[i];
+                arr[i]=arr[2*i+1];
+                arr[2*i+1]=temp;
+               }
+               i=i/2;
+              }
+            }
+         
+       }
+       void display(){
+           for(int i=1;i<=n;i++)
+           {
+               cout<<" "<<arr[i];
+           }
+           cout<<endl;
+       }
+     
+      void addelement(int num){
+          n=n+1;
+          arr[n]=num;
+          i=n;
+          while(i>0)
+          {
+                 if(arr[2*i]>=arr[i])
+               {
+             
+                int temp=arr[i];
+                arr[i]=arr[2*i];
+                arr[2*i]=temp;
+               }
+             if(arr[2*i+1]>=arr[i])
+               {
+               
+                int temp=arr[i];
+                arr[i]=arr[2*i+1];
+                arr[2*i+1]=temp;
+               }
+               i=i/2;
+             
+          }
+      }
+     
+      void deletion(){
+        
+          i=1;
+
+          int temp=arr[i];
+          arr[i]=arr[n];
+          arr[n]=temp;
+         
+           n--;
+         
+          while(2*i<n){
+             
+              if(arr[2*i]>arr[2*i+1])
+              {
+                 
+                     int temp=arr[i];
+                arr[i]=arr[2*i];
+                arr[2*i]=temp;
+              }
+              else{
+                 
+                   int temp=arr[i];
+                arr[i]=arr[2*i+1];
+                arr[2*i+1]=temp;
+              }
+              i=2*i;
+          }
+         
+         
+         
+      }
+};
+int main()
+{    Heap a;
+    
+    int conti;
+     
+     int choice;
+     
+     do{ cout<<"1:Add heap array \n2:Add element \n3:Delete element"<<endl;
+         cout<<"Enter choice: "<<endl;
+         cin>>choice;
+         switch(choice)
+         {
+             case 1:
+             
+             a.heap();
+             a.arrange_heap();
+             cout<<"Array after Heapify: ";
+             a.display();
+               break;
+               
+            case 2:
+             cout<<endl<<"Add element : ";
+             int num;
+             cin>>num;
+             a.addelement(num);
+             a.display();
+               break;
+             case 3:
+             cout<<endl<<"After Deleting element : ";
+             a.deletion();
+             a.display();
+               break;
+         }
+         cout<<"Do you want to continue YES[1]/NO[0]: ";
+         cin>>conti;
+     }while(conti==1);
+   
+
+    return 0;
+}
+//OUTPUT:
+1:Add heap array 
+2:Add element 
+3:Delete element
+Enter choice: 
+1
+Enter size of the array : 8
+Enter elements in the array :4
+3
+8
+2
+1
+6
+7
+5
+Array after Heapify:  8 5 7 3 1 4 6 2
+Do you want to continue YES[1]/NO[0]: 1
+1:Add heap array 
+2:Add element 
+3:Delete element
+Enter choice: 
+2
+
+Add element : 15
+ 15 8 7 5 1 4 6 2 3
+Do you want to continue YES[1]/NO[0]: 1
+1:Add heap array 
+2:Add element 
+3:Delete element
+Enter choice: 
+3
+
+After Deleting element :  8 5 7 3 1 4 6 2
+Do you want to continue YES[1]/NO[0]: 1
+1:Add heap array 
+2:Add element 
+3:Delete element
+Enter choice: 
+3
+
+After Deleting element :  7 3 2 5 1 4 6
+Do you want to continue YES[1]/NO[0]: 1
+

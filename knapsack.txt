@@ -1,0 +1,81 @@
+#include<stdio.h>
+
+
+
+void Knapsack(float profit[],float weight[],int capacity,int num,float ratio[])
+{
+
+float tp=0.0;
+
+ for (int i = 0; i < num; i++) {
+        if (capacity <= 0) {
+            break;
+        }
+        if (weight[i] <= capacity) {
+            tp =tp+ profit[i];
+            capacity -= weight[i];
+        } else {
+            tp =tp+ (profit[i] * (capacity / weight[i]));
+            capacity = 0;
+        }
+    }
+   
+
+
+
+    printf("The total profit is:\n %f",tp);
+
+}
+int main()
+{
+  float profit[20],weight[20], ratio[20];
+  int capacity,num;
+  printf("Enter the total objects in the bag\n");
+  scanf("%d",&num);
+  printf("Enter the capacity of bag\n");
+  scanf("%d",&capacity);
+  printf("Enter the profit and the weight of an object\n");
+  for(int i=0;i<num;i++)
+  {
+   scanf("%f %f",&profit[i],&weight[i]);
+  }
+  for(int i=0;i<num;i++)
+  {
+  ratio[i]=profit[i]/weight[i];
+  }
+  for (int i = 0; i < num; i++) {
+        for (int j = i + 1; j < num; j++) {
+            if (ratio[i] < ratio[j]) {
+                float tempratio = ratio[j];
+                ratio[j] = ratio[i];
+                ratio[i] = tempratio;
+
+                float tempprofit = profit[j];
+                profit[j] = profit[i];
+                profit[i] = tempprofit;
+
+               float tempweight = weight[j];
+                weight[j] = weight[i];
+                weight[i] = tempweight;
+            }
+        }
+        }
+     
+   Knapsack(profit,weight,capacity,num,ratio);
+
+return 0;
+}
+
+
+
+Output :-
+Enter the total objects in the bag
+3
+Enter the capacity of bag
+20
+Enter the profit and the weight of an object
+25 18
+24 15
+15 10
+The total profit is:
+ 31.500000

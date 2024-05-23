@@ -1,0 +1,134 @@
+//SYITB105
+//Name:-Devashish Rahate
+//	Assignment No:7
+
+#include <iostream>
+using namespace std;
+
+void multistageGraph(int n, int adj_mat[][100], int d[], int cost[]) {
+    cost[n - 1] = 0;
+    for (int i = n - 2; i >= 0; i--) {
+        cost[i] = 9999;
+        for (int j = i; j < n; j++) {
+            if (adj_mat[i][j] != -1 && cost[j] + adj_mat[i][j] < cost[i]) {
+                cost[i] = cost[j] + adj_mat[i][j];
+                d[i] = j;
+            }
+        }
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of vertices: ";
+    cin >> n;
+
+    int adj_mat[100][100];
+    int cost[100];
+    int d[100];
+    int path[100];
+
+    cout << "Enter the adjacency matrix for the graph:" << endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << "Enter the distance from vertex " << i + 1 << " to vertex " << j + 1 << ": ";
+            cin >> adj_mat[i][j];
+        }
+    }
+
+    multistageGraph(n, adj_mat, d, cost);
+    path[0] = 0;
+    int k = 0;
+    for (int i = 1; i < n; i++) {
+        path[i] = d[path[i - 1]];
+        k++;
+        if (d[path[i - 1]] == n - 1) {
+            break;
+        }
+    }
+
+    cout << "Path taken: ";
+    for (int m = 0; m < k; m++) {
+        cout << path[m] + 1 << "--";
+    }
+    cout << n << endl;
+
+    return 0;
+}
+
+
+
+
+output--
+
+Enter the number of vertices: 8
+Enter the adjacency matrix for the graph:
+Enter the distance from vertex 1 to vertex 1: 0
+Enter the distance from vertex 1 to vertex 2: 1
+Enter the distance from vertex 1 to vertex 3: 2
+Enter the distance from vertex 1 to vertex 4: 5
+Enter the distance from vertex 1 to vertex 5: 0
+Enter the distance from vertex 1 to vertex 6: 0
+Enter the distance from vertex 1 to vertex 7: 0
+Enter the distance from vertex 1 to vertex 8: 0
+Enter the distance from vertex 2 to vertex 1: 0
+Enter the distance from vertex 2 to vertex 2: 0
+Enter the distance from vertex 2 to vertex 3: 0
+Enter the distance from vertex 2 to vertex 4: 0
+Enter the distance from vertex 2 to vertex 5: 4
+Enter the distance from vertex 2 to vertex 6: 11
+Enter the distance from vertex 2 to vertex 7: 0
+Enter the distance from vertex 2 to vertex 8: 0
+Enter the distance from vertex 3 to vertex 1: 0
+Enter the distance from vertex 3 to vertex 2: 0
+Enter the distance from vertex 3 to vertex 3: 0
+Enter the distance from vertex 3 to vertex 4: 0
+Enter the distance from vertex 3 to vertex 5: 9
+Enter the distance from vertex 3 to vertex 6: 5
+Enter the distance from vertex 3 to vertex 7: 16
+Enter the distance from vertex 3 to vertex 8: 0
+Enter the distance from vertex 4 to vertex 1: 0
+Enter the distance from vertex 4 to vertex 2: 0
+Enter the distance from vertex 4 to vertex 3: 0
+Enter the distance from vertex 4 to vertex 4: 0
+Enter the distance from vertex 4 to vertex 5: 0
+Enter the distance from vertex 4 to vertex 6: 0
+Enter the distance from vertex 4 to vertex 7: 2
+Enter the distance from vertex 4 to vertex 8: 0
+Enter the distance from vertex 5 to vertex 1: 0
+Enter the distance from vertex 5 to vertex 2: 0
+Enter the distance from vertex 5 to vertex 3: 0
+Enter the distance from vertex 5 to vertex 4: 0
+Enter the distance from vertex 5 to vertex 5: 0
+Enter the distance from vertex 5 to vertex 6: 0
+Enter the distance from vertex 5 to vertex 7: 0
+Enter the distance from vertex 5 to vertex 8: 18
+Enter the distance from vertex 6 to vertex 1: 0
+Enter the distance from vertex 6 to vertex 2: 0
+Enter the distance from vertex 6 to vertex 3: 0
+Enter the distance from vertex 6 to vertex 4: 0
+Enter the distance from vertex 6 to vertex 5: 0
+Enter the distance from vertex 6 to vertex 6: 0
+Enter the distance from vertex 6 to vertex 7: 0
+Enter the distance from vertex 6 to vertex 8: 13
+Enter the distance from vertex 7 to vertex 1: 0
+Enter the distance from vertex 7 to vertex 2: 0
+Enter the distance from vertex 7 to vertex 3: 0
+Enter the distance from vertex 7 to vertex 4: 0
+Enter the distance from vertex 7 to vertex 5: 0
+Enter the distance from vertex 7 to vertex 6: 0
+Enter the distance from vertex 7 to vertex 7: 0
+Enter the distance from vertex 7 to vertex 8: 2
+Enter the distance from vertex 8 to vertex 1: 0
+Enter the distance from vertex 8 to vertex 2: 0
+Enter the distance from vertex 8 to vertex 3: 0
+Enter the distance from vertex 8 to vertex 4: 0
+Enter the distance from vertex 8 to vertex 5: 0
+Enter the distance from vertex 8 to vertex 6: 0
+Enter the distance from vertex 8 to vertex 7: 0
+Enter the distance from vertex 8 to vertex 8: 0
+Path taken: 1-4-7-8
+
+
+...Program finished with exit code 0
+Press ENTER to exit console.
